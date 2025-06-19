@@ -24,6 +24,7 @@ string readFile(const string &path) {
     return buffer.str();
 }
 
+
 void add(const string &filename) {
     string content = readFile(filename);
     string hash = sha1(content);
