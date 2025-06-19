@@ -48,6 +48,7 @@ string readFile(const string &path) {
     return buffer.str();
 }
 
+//function to initialize and create directory 
 void init() {
     fs::create_directory(".minigit");
     fs::create_directory(".minigit/objects");
@@ -57,6 +58,7 @@ void init() {
     cout << "Initialized empty MiniGit repository" << endl;
 }
 
+//function to add files
 void add(const string &filename) {
     string content = readFile(filename);
     string hash = sha1(content);
@@ -65,6 +67,7 @@ void add(const string &filename) {
     cout << "Staged " << filename << endl;
 }
 
+//function to commit 
 void commit(const string &msg) {
     Commit c;
     c.timestamp = time(nullptr);
@@ -92,6 +95,7 @@ void commit(const string &msg) {
     cout << "Committed as " << c.hash << endl;
 }
 
+//function to view log 
 void log() {
     string current = branches[head];
     while (!current.empty()) {
@@ -104,11 +108,13 @@ void log() {
     }
 }
 
+//function to branch 
 void branch(const string &name) {
     branches[name] = branches[head];
     cout << "Created branch " << name << endl;
 }
 
+//function to checkout 
 void checkout(const string &target) {
     string commitHash = branches.count(target) ? branches[target] : target;
     if (!commits.count(commitHash)) {
@@ -128,6 +134,7 @@ void checkout(const string &target) {
     cout << "Checked out to " << target << endl;
 }
 
+//function to find Lowest common ancestor 
 string findLCA(string a, string b) {
     unordered_set<string> ancestors;
     while (!a.empty()) {
@@ -141,6 +148,7 @@ string findLCA(string a, string b) {
     return "";
 }
 
+//function to merge 
 void merge(const string &branchName) {
     if (!branches.count(branchName)) {
         cout << "Branch not found" << endl;
@@ -187,6 +195,7 @@ void merge(const string &branchName) {
     cout << "Merged into " << head << " as commit " << merged.hash << endl;
 }
 
+//function for difference view 
 void diff(const string &a, const string &b) {
     if (!commits.count(a) || !commits.count(b)) {
         cout << "Invalid commit hash" << endl;
